@@ -709,6 +709,7 @@ export default function AgentTypesQuiz() {
   const [missed, setMissed] = useState([]);
   const [done, setDone] = useState(false);
   const [animKey, setAnimKey] = useState(0);
+  const [showStudy, setShowStudy] = useState(false);
 
   const q = deck[idx];
   const total = deck.length;
@@ -797,6 +798,100 @@ export default function AgentTypesQuiz() {
         .aq-title em {
           color: #d4246a;
           font-style: italic;
+        }
+
+        /* ── Study Button ── */
+        .aq-study-btn {
+          display: inline-block;
+          margin-top: 12px;
+          padding: 7px 20px;
+          font-family: 'Nunito', sans-serif;
+          font-size: 12px;
+          font-weight: 800;
+          letter-spacing: 1.5px;
+          text-transform: uppercase;
+          color: #f0dde8;
+          background: #d4246a22;
+          border: 1px solid #d4246a55;
+          border-radius: 99px;
+          cursor: pointer;
+          transition: background 0.2s, border-color 0.2s;
+        }
+        .aq-study-btn:hover {
+          background: #d4246a44;
+          border-color: #d4246a;
+        }
+
+        /* ── Study Panel ── */
+        .aq-study-panel {
+          background: linear-gradient(160deg, #170010 0%, #1e0018 100%);
+          border: 1px solid #3a0028;
+          border-radius: 18px;
+          padding: 30px;
+          margin-bottom: 24px;
+          box-shadow: 0 12px 48px #00000077, inset 0 1px 0 #d4246a22;
+          max-height: 60vh;
+          overflow-y: auto;
+          animation: aqFadeUp 0.32s ease both;
+          font-size: 14px;
+          line-height: 1.7;
+          color: #d8b8cc;
+        }
+        .aq-study-panel h2 {
+          font-family: 'Playfair Display', serif;
+          font-size: 22px;
+          font-weight: 900;
+          color: #f8eef3;
+          margin: 24px 0 8px;
+        }
+        .aq-study-panel h2:first-child { margin-top: 0; }
+        .aq-study-panel h3 {
+          font-family: 'Playfair Display', serif;
+          font-size: 17px;
+          font-weight: 700;
+          color: #ff6aaa;
+          margin: 20px 0 6px;
+        }
+        .aq-study-panel p {
+          margin: 8px 0;
+        }
+        .aq-study-panel strong {
+          color: #f0dde8;
+        }
+        .aq-study-panel em {
+          color: #d4246a;
+          font-style: italic;
+        }
+        .aq-study-panel hr {
+          border: none;
+          border-top: 1px solid #3a0028;
+          margin: 20px 0;
+        }
+        .aq-study-panel table {
+          width: 100%;
+          border-collapse: collapse;
+          margin: 12px 0;
+          font-size: 13px;
+        }
+        .aq-study-panel th {
+          text-align: left;
+          padding: 8px 10px;
+          background: #d4246a22;
+          color: #ff6aaa;
+          border: 1px solid #3a0028;
+          font-weight: 800;
+          letter-spacing: 0.5px;
+        }
+        .aq-study-panel td {
+          padding: 8px 10px;
+          border: 1px solid #3a0028;
+          color: #d8b8cc;
+        }
+        .aq-study-panel::-webkit-scrollbar { width: 6px; }
+        .aq-study-panel::-webkit-scrollbar-track { background: transparent; }
+        .aq-study-panel::-webkit-scrollbar-thumb {
+          background: #d4246a44;
+          border-radius: 99px;
         }
 
         /* ── Progress ── */
@@ -1153,7 +1248,76 @@ export default function AgentTypesQuiz() {
           <div className="aq-masthead">
             <div className="aq-eyebrow">Agent Architecture · Study Quiz</div>
             <h1 className="aq-title">Types of <em>Agents</em></h1>
+            <button className="aq-study-btn" onClick={() => setShowStudy(s => !s)}>
+              {showStudy ? '✕ Close Study Material' : '📖 Study Material'}
+            </button>
           </div>
+
+          {showStudy && (
+            <div className="aq-study-panel">
+              <h2>The Four Agent Species</h2>
+              <p><strong>Source:</strong> Nate B Jones, Substack video — "Wrong Kind of Agent"</p>
+
+              <h3>The foundational insight</h3>
+              <p>"Agent" is not one thing. Every agent system is technically an LLM + tools + a feedback loop, but <em>how you configure that loop</em> — what it's optimizing for, who's involved, and at what scale — produces four completely different kinds of systems. Using the wrong one for a job is one of the most common and expensive mistakes in agentic engineering right now.</p>
+
+              <hr />
+
+              <h3>Species 1 — Coding Harness</h3>
+              <p>The simplest and most familiar form. A single agent takes the place of a developer: reading files, writing code, using tools like search, and looping on feedback. The human acts as a manager rather than an individual contributor.</p>
+              <p>The key unlock is <strong>decomposition</strong> — breaking a gnarly problem into well-scoped tasks that can each be handed to an agent independently.</p>
+              <p>When teams scale up (8–20 developers), the right move is to shift from individual-centered to agent-centered architecture. Cursor demonstrated this by building browsers and compilers with millions of lines of code: a planner agent that tracks state and assigns tasks, plus short-running executor agents. They tried three management levels and it broke — two levels (planner + executors) is the stable configuration. <strong>Simple scales, complicated doesn't.</strong></p>
+              <p><strong>Use when:</strong> Your judgment is the quality gate, the work is software-shaped, and scale is individual-to-team.</p>
+
+              <hr />
+
+              <h3>Species 2 — Dark Factory</h3>
+              <p>A dark factory removes humans from the middle of the process entirely. The human is involved heavily at two points only: writing the spec at the start, and reviewing output at the end. Everything in between is automated agents running against evals.</p>
+              <p>The key mechanism is <strong>eval-driven iteration</strong>: software is generated, tested against an evaluation, and looped until it passes. The harder problem is writing excellent non-functional requirements and building evals that actually capture quality.</p>
+              <p>Think of coding harnesses and dark factories as points on a spectrum of human involvement. As your evals get better and your trust in the system grows, you can slide toward darker and darker factory operation.</p>
+              <p><strong>Use when:</strong> You trust your evals, your spec quality is excellent, and human involvement in the middle is a bottleneck rather than a safeguard.</p>
+
+              <hr />
+
+              <h3>Species 3 — Auto Research</h3>
+              <p>This is not about producing software — it's about <strong>optimizing a metric</strong>. It descends from classical machine learning: run experiments, measure results, iterate toward a better score. The agent is hill-climbing a performance landscape.</p>
+              <p>The critical question: <strong>is your problem software-shaped or metric-shaped?</strong> Auto research doesn't produce working software; it finds the configuration that makes a number go up.</p>
+              <p><strong>Use when:</strong> You have a measurable rate you want to improve and sufficient data to run experiments against.</p>
+
+              <hr />
+
+              <h3>Species 4 — Orchestration</h3>
+              <p>Multiple specialized agents arranged in a workflow, with an orchestration layer managing handoffs. A researcher hands to a drafter; a ticket-reader hands to a resolver. The agents have genuinely different roles, unlike a coding harness where all agents do roughly the same kind of work.</p>
+              <p>The common confusion: people see a planner agent handing work to executor agents in a coding harness and think that's orchestration. The difference is that in a coding harness all agents serve one unified goal; in orchestration, agents have genuinely specialized roles and the routing between them is the product.</p>
+              <p><strong>Use when:</strong> You have truly distinct specialized jobs that need to be routed between different agents, and the workflow volume justifies the coordination overhead.</p>
+
+              <hr />
+
+              <h3>Quick-decision cheat sheet</h3>
+              <table>
+                <thead>
+                  <tr><th>Situation</th><th>Agent species</th></tr>
+                </thead>
+                <tbody>
+                  <tr><td>You're coding and your judgment gates quality</td><td>Coding harness</td></tr>
+                  <tr><td>Large team project, need parallel agentic work</td><td>Project-scale coding harness (planner + executors)</td></tr>
+                  <tr><td>Your evals are solid, humans bottleneck the middle</td><td>Dark factory</td></tr>
+                  <tr><td>You want to maximize a measurable rate</td><td>Auto research</td></tr>
+                  <tr><td>You have genuinely specialized roles needing handoffs</td><td>Orchestration</td></tr>
+                </tbody>
+              </table>
+
+              <hr />
+
+              <h3>Key terms to study</h3>
+              <p><strong>Decomposition</strong> — breaking a large problem into independently scoped agent tasks. The core skill for coding harnesses.</p>
+              <p><strong>Evals</strong> — automated tests that gate whether agentic output is good enough to proceed. The mechanism that makes dark factories function.</p>
+              <p><strong>Non-functional requirements</strong> — rules constraining agent behavior that can be verified automatically. What makes dark factory pipelines reliable.</p>
+              <p><strong>Hill climbing</strong> — the ML concept underlying auto research. Iterative experimentation toward a local optimum in a metric space.</p>
+              <p><strong>Planner/executor pattern</strong> — the two-level architecture Cursor validated for large-scale harnesses. Planner maintains state and assigns tasks; executors are short-running and narrowly scoped.</p>
+              <p><strong>Context handoff design</strong> — the hard problem in orchestration. What does each agent need to do its job, and how do you pass it cleanly without losing fidelity?</p>
+            </div>
+          )}
 
           {!done ? (
             <>
