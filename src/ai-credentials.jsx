@@ -692,6 +692,7 @@ export default function AICredentialsQuiz() {
   const [missed, setMissed] = useState([]);
   const [done, setDone] = useState(false);
   const [animKey, setAnimKey] = useState(0);
+  const [showStudy, setShowStudy] = useState(false);
 
   const q = deck[idx];
   const total = deck.length;
@@ -785,6 +786,117 @@ export default function AICredentialsQuiz() {
           font-weight: 700;
           color: #7a6820;
           letter-spacing: 1px;
+        }
+
+        /* ── Study Button ── */
+        .cq-study-btn {
+          display: inline-block;
+          margin-top: 12px;
+          padding: 7px 20px;
+          font-family: 'Nunito', sans-serif;
+          font-size: 12px;
+          font-weight: 800;
+          letter-spacing: 1.5px;
+          text-transform: uppercase;
+          color: #fff8e7;
+          background: #e6b80022;
+          border: 1px solid #e6b80055;
+          border-radius: 99px;
+          cursor: pointer;
+          transition: background 0.2s, border-color 0.2s;
+        }
+        .cq-study-btn:hover {
+          background: #e6b80044;
+          border-color: #e6b800;
+        }
+
+        /* ── Study Panel ── */
+        .cq-study-panel {
+          background: linear-gradient(160deg, #151000 0%, #1a1500 100%);
+          border: 1px solid #332800;
+          border-radius: 18px;
+          padding: 30px;
+          margin-bottom: 24px;
+          box-shadow: 0 12px 48px #00000077, inset 0 1px 0 #e6b80022;
+          max-height: 60vh;
+          overflow-y: auto;
+          animation: cqFadeUp 0.32s ease both;
+          font-size: 14px;
+          line-height: 1.7;
+          color: #d8ccb8;
+        }
+        @keyframes cqFadeUp {
+          from { opacity: 0; transform: translateY(12px); }
+          to   { opacity: 1; transform: translateY(0); }
+        }
+        .cq-study-panel h2 {
+          font-family: 'Playfair Display', serif;
+          font-size: 22px;
+          font-weight: 900;
+          color: #fff8e7;
+          margin: 24px 0 8px;
+        }
+        .cq-study-panel h2:first-child { margin-top: 0; }
+        .cq-study-panel h3 {
+          font-family: 'Playfair Display', serif;
+          font-size: 17px;
+          font-weight: 700;
+          color: #e6b800;
+          margin: 20px 0 6px;
+        }
+        .cq-study-panel h4 {
+          font-size: 14px;
+          font-weight: 800;
+          color: #c89a00;
+          margin: 14px 0 4px;
+        }
+        .cq-study-panel p {
+          margin: 8px 0;
+        }
+        .cq-study-panel strong {
+          color: #fff8e7;
+        }
+        .cq-study-panel em {
+          color: #e6b800;
+          font-style: italic;
+        }
+        .cq-study-panel hr {
+          border: none;
+          border-top: 1px solid #332800;
+          margin: 20px 0;
+        }
+        .cq-study-panel ul {
+          margin: 8px 0;
+          padding-left: 20px;
+        }
+        .cq-study-panel li {
+          margin: 4px 0;
+        }
+        .cq-study-panel table {
+          width: 100%;
+          border-collapse: collapse;
+          margin: 12px 0;
+          font-size: 13px;
+        }
+        .cq-study-panel th {
+          text-align: left;
+          padding: 8px 10px;
+          background: #e6b80022;
+          color: #e6b800;
+          border: 1px solid #332800;
+          font-weight: 800;
+          letter-spacing: 0.5px;
+        }
+        .cq-study-panel td {
+          padding: 8px 10px;
+          border: 1px solid #332800;
+          color: #d8ccb8;
+        }
+        .cq-study-panel::-webkit-scrollbar { width: 6px; }
+        .cq-study-panel::-webkit-scrollbar-track { background: transparent; }
+        .cq-study-panel::-webkit-scrollbar-thumb {
+          background: #e6b80044;
+          border-radius: 99px;
         }
 
         .cq-progress-rail {
@@ -1129,7 +1241,181 @@ export default function AICredentialsQuiz() {
             <div className="cq-kicker">AI Career Mastery · Study Quiz</div>
             <h1 className="cq-title">Your <span>Artifacts</span> Are<br />Your Credential</h1>
             <div className="cq-subtitle">50 Questions · 10 Sections</div>
+            <button className="cq-study-btn" onClick={() => setShowStudy(s => !s)}>
+              {showStudy ? '✕ Close Study Material' : '📖 Study Material'}
+            </button>
           </div>
+
+          {showStudy && (
+            <div className="cq-study-panel">
+              <h2>Your AI Credentials Don't Matter. Your Artifacts Do.</h2>
+
+              <h2>Part 1 — The AI Labor Market</h2>
+              <h3>The Core Thesis</h3>
+              <ul>
+                <li><strong>Artifacts &gt; resumes</strong> when getting hired in AI</li>
+                <li>There are essentially <strong>infinite AI jobs</strong> right now — uncapped budgets</li>
+                <li>Companies <strong>cannot find enough qualified people</strong> despite high candidate volume</li>
+              </ul>
+              <h3>Key Statistics</h3>
+              <table>
+                <thead><tr><th>Fact</th><th>Detail</th></tr></thead>
+                <tbody>
+                  <tr><td>Accenture workforce training</td><td>700,000 people on agentic AI</td></tr>
+                  <tr><td>ManpowerGroup survey</td><td>39,000 employers across 41 countries</td></tr>
+                  <tr><td>AI skills ranking</td><td>Single hardest capability to find on Earth (2026)</td></tr>
+                  <tr><td>Demand-to-supply ratio</td><td><strong>3.2 to 1</strong> globally</td></tr>
+                  <tr><td>Open AI positions</td><td>Over <strong>1.6 million</strong></td></tr>
+                  <tr><td>Qualified candidates</td><td>Roughly <strong>518,000</strong></td></tr>
+                  <tr><td>Average time to fill</td><td><strong>142 days</strong></td></tr>
+                  <tr><td>Employers reporting difficulty</td><td><strong>72%</strong></td></tr>
+                  <tr><td>Salary range</td><td><strong>$150K–$400K</strong></td></tr>
+                </tbody>
+              </table>
+              <h3>Why Upskilling Programs Fail</h3>
+              <ul>
+                <li>Taught at the <strong>wrong altitude</strong>: "AI for Everyone" at top, deep ML at bottom, <strong>middle layer barely exists</strong></li>
+                <li>Teaches <strong>tools</strong> when employers hire for <strong>judgment</strong></li>
+                <li><strong>40%</strong> of AI training is video courses; <strong>23%</strong> of leaders say training doesn't translate</li>
+                <li>Only <strong>26%</strong> of workers had received training on collaborating with AI (2024)</li>
+              </ul>
+              <h3>The "Taste" Critique</h3>
+              <p>Paul Graham and Sam Altman say the magic word is <strong>"taste"</strong>. Matt Slotnick called this out: <em>"The taste thing works because it's nebulous, unassailable, and it feeds the ego."</em> The counter: taste is not a skill — but the <strong>seven concrete things underneath it</strong> are.</p>
+
+              <hr />
+
+              <h2>Part 2 — The K-Shaped Split</h2>
+              <h3>Market One (contracting)</h3>
+              <ul>
+                <li>Traditional knowledge-work roles: generalist PMs, standard engineers, conventional analysts</li>
+                <li>US job postings for automation-prone roles fell <strong>13%</strong> after ChatGPT launched</li>
+                <li>HSBC weighing <strong>20,000 job cuts</strong>; Accenture cut <strong>~11,000 roles</strong> while investing $3B in AI</li>
+              </ul>
+              <h3>Market Two (expanding)</h3>
+              <ul>
+                <li>Roles that design, build, operate, manage, or extend AI systems</li>
+                <li>Demand-to-supply: <strong>3.2 to 1</strong></li>
+                <li>The gap is a <strong>skills gap</strong> — not credentials, not network</li>
+              </ul>
+
+              <hr />
+
+              <h2>Part 3 — The Hiring Side Is Broken Too</h2>
+              <h3>The "Fake Posting" Problem</h3>
+              <ul>
+                <li>Many AI job postings are <strong>market research disguised as hiring</strong></li>
+                <li>Root cause: <strong>specification shortage</strong>, not talent shortage</li>
+              </ul>
+              <h3>Code of Conduct for AI Hiring</h3>
+              <ul>
+                <li><strong>Define the outcome</strong> before defining the role</li>
+                <li><strong>Pick one track</strong>, not four</li>
+                <li><strong>Publish evaluation criteria</strong> — measurable outcomes</li>
+                <li><strong>Respect the time</strong> — if using interviews as discovery, pay for it</li>
+              </ul>
+
+              <hr />
+
+              <h2>Part 4 — The Seven Skills</h2>
+              <p>Pulled from real job postings at Anthropic, Robinhood, Upwork, Glean, Scale AI, and others. They are a <strong>progression</strong>, not a checklist. Market-two premium comes from having <strong>five or more</strong>, with depth in at least three.</p>
+
+              <h3>Skill 1 — Specification Precision</h3>
+              <p>Learning to talk to a machine that takes you literally. Vague spec = vague output at scale.</p>
+              <p><em>"Make our customer support better"</em> vs. <em>"Build an agent that handles tier-one tickets: password resets, order status, returns. Escalate when sentiment drops below threshold or billing disputes over $500."</em></p>
+              <p>Key sub-skills: define success criteria before starting, anticipate edge cases, distinguish <strong>hard constraints</strong> from <strong>soft preferences</strong>.</p>
+
+              <h3>Skill 2 — Evaluation and Quality Judgment</h3>
+              <p>The core decomposition of "taste" — most frequently cited skill across all postings.</p>
+              <h4>Part A — Error Detection Under Fluency</h4>
+              <p>AI failure mode: <strong>confidently, fluently, plausibly wrong</strong>. Resist the <strong>fluency heuristic</strong>.</p>
+              <h4>Part B — Edge Case Detection</h4>
+              <p>AI handles the common case beautifully, the edge case terribly.</p>
+              <h4>Part C — Test Case Design</h4>
+              <p>Anthropic's standard: <em>"A good task is one where two domain experts would independently reach the same pass/fail verdict."</em></p>
+              <h4>Part D — Monitoring</h4>
+              <p>Evaluation is <strong>continuous</strong>, not a one-time gate.</p>
+
+              <h3>Skill 3 — Decomposition for Delegation</h3>
+              <p>From using an AI tool to <strong>architecting AI systems</strong>. Agents have fundamentally different constraints: defined context windows, non-deterministic, need explicit success criteria per sub-task.</p>
+              <p>Classification skill: reasoning task / retrieval task / judgment call (human checkpoint) / coordination task (orchestrator).</p>
+
+              <h3>Skill 4 — Failure Pattern Recognition</h3>
+              <table>
+                <thead><tr><th>Pattern</th><th>Description</th></tr></thead>
+                <tbody>
+                  <tr><td><strong>Context Degradation</strong></td><td>Quality drops as sessions get long</td></tr>
+                  <tr><td><strong>Specification Drift</strong></td><td>Agent gradually deviates from original intent</td></tr>
+                  <tr><td><strong>Sycophantic Confirmation</strong></td><td>Agent agrees with wrong premises</td></tr>
+                  <tr><td><strong>Tool Selection Errors</strong></td><td>Wrong tool picked due to overlapping descriptions</td></tr>
+                  <tr><td><strong>Cascade Failure</strong></td><td>One agent's error propagates through the chain</td></tr>
+                  <tr><td><strong>Silent Failure</strong></td><td>Plausible-looking output that is wrong, no error signal</td></tr>
+                </tbody>
+              </table>
+              <p>Most dangerous: <strong>Silent Failure</strong>. Tool Selection Errors tested on CCA exam; tool description quality = highest-impact intervention.</p>
+
+              <h3>Skill 5 — Trust Boundary and Security Design</h3>
+              <p>Diagnostic question: <em>"What's the worst thing that happens if this is wrong, and can I undo it?"</em></p>
+              <p>Four variables: <strong>cost of error</strong>, <strong>reversibility</strong>, <strong>frequency</strong>, <strong>verifiability</strong>.</p>
+              <p>Security dimension: prompt injection, data exfiltration through tool calls, privilege escalation.</p>
+
+              <h3>Skill 6 — Context Architecture</h3>
+              <p>Anthropic's term: <strong>"Context engineering"</strong>. CCA exam weight: <strong>15%</strong>.</p>
+              <p><strong>Persistent context:</strong> always loaded (standards, rules, brand voice). <strong>Per-session context:</strong> loaded when relevant (customer history, specific document).</p>
+              <p>Irrelevant information doesn't just waste space — it <strong>actively degrades performance</strong>.</p>
+
+              <h3>Skill 7 — Cost and Token Economics</h3>
+              <p>Senior models roughly <strong>10–50x more per token</strong> than smaller models. Same workflow: <strong>$50/task</strong> (all senior) vs. <strong>$3/task</strong> (routed) at same quality.</p>
+              <p>Sub-skills: inference cost structure, total cost modeling, model routing, batch vs. real-time tradeoffs.</p>
+
+              <hr />
+
+              <h2>Part 5 — Career Tracks</h2>
+              <table>
+                <thead><tr><th>Track</th><th>Salary Range</th></tr></thead>
+                <tbody>
+                  <tr><td>AI Systems Architect / Agentic Engineer</td><td>$150K–$320K</td></tr>
+                  <tr><td>AI Product Manager</td><td>$133K–$437K+</td></tr>
+                  <tr><td>Agent Operations / AI Reliability</td><td>$130K–$250K</td></tr>
+                  <tr><td>AI-Augmented Domain Specialist</td><td>23–35% premium</td></tr>
+                </tbody>
+              </table>
+              <p><strong>60%</strong> of AI PM hires don't come from CS backgrounds. Agent Ops is the least defined track with the <strong>most open running room</strong>.</p>
+
+              <hr />
+
+              <h2>Part 6 — Artifacts Over Credentials</h2>
+              <p>The ecosystem is young enough that publishing real work gets noticed. In market two, "noticed" means <strong>inbound recruiter messages</strong>.</p>
+              <h3>Two Universal Artifacts</h3>
+              <ul>
+                <li><strong>Failure Post-Mortem:</strong> build a system, watch it fail, analyze using named failure patterns, document the fix</li>
+                <li><strong>Narrated Working Session:</strong> record yourself working with an AI system in real time, narrating decisions — the transparency IS the credential</li>
+              </ul>
+
+              <hr />
+
+              <h2>Part 7 — Twelve-Week Learning Path</h2>
+              <p><strong>Engineer/Architect:</strong> Anthropic Academy foundations (weeks 1–2), first build with Claude API (3–5), tool integration via MCP (6–7), Claude Code training (8–9), capstone multi-agent system (10–11), CCA exam (week 12).</p>
+              <p><strong>PM/Ops/Domain:</strong> Same foundations (1–3), real domain application (4–6), spec writing (7–9), evaluation framework (10–12). Publish everything.</p>
+              <p>CCA Foundations exam: <strong>$99</strong>. All Anthropic Academy prep courses: <strong>free</strong>.</p>
+
+              <hr />
+
+              <h2>Quick-Reference Cheat Sheet</h2>
+              <table>
+                <thead><tr><th>#</th><th>Skill</th><th>One-line summary</th></tr></thead>
+                <tbody>
+                  <tr><td>1</td><td>Specification Precision</td><td>Define what the agent must do precisely enough that it can't go wrong at scale</td></tr>
+                  <tr><td>2</td><td>Evaluation &amp; Quality Judgment</td><td>Detect fluent errors, find edge cases, design test tasks, monitor continuously</td></tr>
+                  <tr><td>3</td><td>Decomposition for Delegation</td><td>Break workflows into isolated agent steps with explicit human checkpoints</td></tr>
+                  <tr><td>4</td><td>Failure Pattern Recognition</td><td>Know the six ways agent systems break before they break in production</td></tr>
+                  <tr><td>5</td><td>Trust Boundary &amp; Security</td><td>Map cost-of-error x reversibility x frequency x verifiability</td></tr>
+                  <tr><td>6</td><td>Context Architecture</td><td>Know what info goes in, when, in what form; manage finite window capacity</td></tr>
+                  <tr><td>7</td><td>Cost &amp; Token Economics</td><td>Model per-task inference cost; route work to cheapest capable model</td></tr>
+                </tbody>
+              </table>
+              <p><strong>The six failure patterns: CSSTCS</strong> — Context Degradation, Specification Drift, Sycophantic Confirmation, Tool Selection Errors, Cascade Failure, Silent Failure.</p>
+            </div>
+          )}
 
           {!done ? (
             <>
