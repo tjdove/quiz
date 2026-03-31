@@ -5,6 +5,7 @@ import './index.css'
 import AgentTypesQuiz from './agents-types.jsx'
 import AICredentialsQuiz from './ai-credentials.jsx'
 import DispatchOpenLoopQuiz from './DispatchOpenLoopQuiz.jsx'
+import DarkFactoryQuiz from './DarkFactoryQuiz.jsx'
 
 function Home() {
   return (
@@ -14,6 +15,7 @@ function Home() {
         <Link to="/agent-types" style={{ fontSize: '1.2rem', padding: '12px 24px', background: '#4a90d9', color: '#fff', borderRadius: 8, textDecoration: 'none' }}>Agent Types</Link>
         <Link to="/ai-credentials" style={{ fontSize: '1.2rem', padding: '12px 24px', background: '#4a90d9', color: '#fff', borderRadius: 8, textDecoration: 'none' }}>AI Credentials</Link>
         <Link to="/dispatch-open-loop" style={{ fontSize: '1.2rem', padding: '12px 24px', background: '#4a90d9', color: '#fff', borderRadius: 8, textDecoration: 'none' }}>The Open Loop Audit</Link>
+        <Link to="/dark-factory" style={{ fontSize: '1.2rem', padding: '12px 24px', background: '#4a90d9', color: '#fff', borderRadius: 8, textDecoration: 'none' }}>The Dark Factory</Link>
       </nav>
     </div>
   )
@@ -27,6 +29,7 @@ createRoot(document.getElementById('root')).render(
         <Route path="/agent-types" element={<AgentTypesQuiz />} />
         <Route path="/ai-credentials" element={<AICredentialsQuiz />} />
         <Route path="/dispatch-open-loop" element={<DispatchOpenLoopQuiz />} />
+        <Route path="/dark-factory" element={<DarkFactoryQuiz />} />
       </Routes>
     </BrowserRouter>
   </StrictMode>,
